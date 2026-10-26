@@ -10,6 +10,9 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.command.intake.IntakeInCmd;
 import org.firstinspires.ftc.teamcode.command.intake.IntakeOutCmd;
+import org.firstinspires.ftc.teamcode.command.shooter.AndreaShootCmd;
+import org.firstinspires.ftc.teamcode.command.transfer.TransferInCmd;
+import org.firstinspires.ftc.teamcode.command.transfer.TransferOutCmd;
 
 
 //MAIN CODE
@@ -30,10 +33,17 @@ public class KovaTeleOp extends OpMode {
     @Override
     public void start() {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A)
+                .whileHeld(new TransferInCmd(robot.transferSub))
                 .whileHeld(new IntakeInCmd(robot.intakeSub));
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.B)
+                .whileHeld(new TransferOutCmd(robot.transferSub))
                 .whileHeld(new IntakeOutCmd(robot.intakeSub));
+
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X)
+                .toggleWhenActive(new AndreaShootCmd(robot.shooterSub, 6000)
+                );
+
 
         // FIELD CENTRIC DRIVE
         robot.pedroSub.setDefaultCommand(robot.pedroSub.fieldCentricCmd(gamepad1));

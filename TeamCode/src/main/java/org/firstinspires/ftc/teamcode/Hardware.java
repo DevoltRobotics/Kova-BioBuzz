@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.pedropathing.follower.Follower;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
 
+import org.firstinspires.ftc.teamcode.subsystems.AlecSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.AndreaSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.NiconiconiiSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.PedroSubsystem;
 
@@ -28,6 +25,8 @@ public class Hardware {
 
     public PedroSubsystem pedroSub;
     public NiconiconiiSubsystem intakeSub;
+    public AlecSubsystem transferSub;
+    public AndreaSubsystem shooterSub;
 
     public void init(HardwareMap hardwareMap) {
 
@@ -45,7 +44,9 @@ public class Hardware {
 
         CommandScheduler.getInstance().registerSubsystem(
             pedroSub = new PedroSubsystem(hardwareMap),
-            intakeSub = new NiconiconiiSubsystem(intakeMotor)
+            intakeSub = new NiconiconiiSubsystem(intakeMotor),
+            transferSub = new AlecSubsystem(transferMotor),
+            shooterSub = new AndreaSubsystem(shooterMotor, shootwoMotor)
         );
     }
 
