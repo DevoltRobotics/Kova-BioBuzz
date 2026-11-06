@@ -21,4 +21,10 @@ public class AndreaShootCmd extends CommandBase {
         subsystem.setTargetVelocity(targetVelocity);
     }
 
+
+    @Override
+    public void end(boolean interrupted) {
+        subsystem.setTargetVelocity(0);
+    }
+
 }

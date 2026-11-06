@@ -16,11 +16,11 @@ public class AlecSubsystem extends SubsystemBase {
     }
 
     public void transferIn() {
-        transfer.setPower(1);
+        transfer.setPower(-1);
     }
 
     public void transferOut() {
-        transfer.setPower(-1);
+        transfer.setPower(1);
     }
 
     public void transferOff() {

@@ -23,7 +23,7 @@ public class Hardware {
 
     // SUBSISTEMAS
 
-    public PedroSubsystem pedroSub;
+    //public PedroSubsystem pedroSub;
     public NiconiconiiSubsystem intakeSub;
     public AlecSubsystem transferSub;
     public AndreaSubsystem shooterSub;
@@ -36,14 +36,12 @@ public class Hardware {
         shooterMotor = hardwareMap.get(DcMotor.class, "shooter1");
         shootwoMotor = hardwareMap.get(DcMotor.class, "shooter2");
 
-        shootwoMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
         //SERVOS
 
-        //SUBSYSTEMAS
+        //SUBSYSTEMAS (recuerda quitarle comentarios a lo de pedro, hay cosas en el kovateleop)
 
         CommandScheduler.getInstance().registerSubsystem(
-            pedroSub = new PedroSubsystem(hardwareMap),
+            //pedroSub = new PedroSubsystem(hardwareMap),
             intakeSub = new NiconiconiiSubsystem(intakeMotor),
             transferSub = new AlecSubsystem(transferMotor),
             shooterSub = new AndreaSubsystem(shooterMotor, shootwoMotor)

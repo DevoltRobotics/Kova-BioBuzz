@@ -41,12 +41,12 @@ public class KovaTeleOp extends OpMode {
                 .whileHeld(new IntakeOutCmd(robot.intakeSub));
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X)
-                .toggleWhenActive(new AndreaShootCmd(robot.shooterSub, 6000)
-                );
+                .toggleWhenActive(new AndreaShootCmd(robot.shooterSub, 6000));
 
 
         // FIELD CENTRIC DRIVE
-        robot.pedroSub.setDefaultCommand(robot.pedroSub.fieldCentricCmd(gamepad1));
+        //
+        // robot.pedroSub.setDefaultCommand(robot.pedroSub.fieldCentricCmd(gamepad1));
     }
 
     @Override
