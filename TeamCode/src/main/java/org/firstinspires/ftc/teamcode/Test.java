@@ -1,66 +1,59 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.panels.Panels;
 import com.bylazar.telemetry.PanelsTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.seattlesolvers.solverslib.command.CommandScheduler;
-import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
-import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.command.intake.IntakeInCmd;
 import org.firstinspires.ftc.teamcode.command.intake.IntakeOutCmd;
+import org.firstinspires.ftc.teamcode.command.shooter.AndreaLLShootCmd;
 import org.firstinspires.ftc.teamcode.command.shooter.AndreaShootCmd;
 import org.firstinspires.ftc.teamcode.command.transfer.TransferInCmd;
 import org.firstinspires.ftc.teamcode.command.transfer.TransferOutCmd;
+import org.firstinspires.ftc.teamcode.util.KovaOpMode;
+import org.firstinspires.ftc.teamcode.util.OpModeCommand;
 
-
-
-@TeleOp (name = "Test")
+@TeleOp(name = "Test")
 @Configurable
-public class Test extends OpMode {
+public class Test extends OpModeCommand {
+    public GamepadEx ines;
+    public GamepadEx dani;
 
-    private final Hardware robot = new Hardware();
-    GamepadEx ines;
-    GamepadEx dani;
+    public static double targetVelocity = 4000;
 
-    public static double shooterVelocity = 4000;
+    public Test(){
+
+    }
 
     @Override
-    public void init() {
-        robot.init(hardwareMap);
-
-        ines = new GamepadEx(gamepad1);
+    public void initialize() {
         dani = new GamepadEx(gamepad2);
+        ines = new GamepadEx(gamepad1);
+        Trigger shooterShoot = new Trigger(() -> gamepad2.right_trigger > 0.3);
+        Trigger shooterLLShoot = new Trigger(() -> gamepad2.left_trigger > 0.3);
 
+
+
+        dani.getGamepadButton(GamepadKeys.Button.A)
+                .whileHeld(new IntakeInCmd(intakeSubsystem))
+                .whileHeld(new TransferInCmd(TransferSubsystem));
+
+        dani.getGamepadButton(GamepadKeys.Button.B)
+                .whileHeld(new TransferOutCmd(TransferSubsystem))
+                .whileHeld(new IntakeOutCmd(intakeSubsystem));
+
+        shooterShoot.whileActiveContinuous(new AndreaShootCmd(shooterSubsystem, targetVelocity));
+
+        shooterLLShoot.whileActiveContinuous(new AndreaLLShootCmd(shooterSubsystem, llSubsystem, TransferSubsystem));
     }
 
     @Override
     public void start() {
-        dani.getGamepadButton(GamepadKeys.Button.A)
-                .whileHeld(new IntakeInCmd(robot.intakeSub))
-                .whileHeld(new TransferInCmd(robot.transferSub));
+        // Se puede dejar vacío o incluir acciones exclusivas del inicio de la partida
 
-        dani.getGamepadButton(GamepadKeys.Button.B)
-                .whileHeld(new TransferOutCmd(robot.transferSub))
-                .whileHeld(new IntakeOutCmd(robot.intakeSub));
 
-        Trigger shooterShoot = new Trigger(() -> gamepad2.right_trigger_pressed);
-        shooterShoot.whileActiveContinuous(new AndreaShootCmd(robot.shooterSub, shooterVelocity));
     }
-
-    @Override
-    public void loop() {
-        CommandScheduler.getInstance().run();
-
-        ines.readButtons();
-        dani.readButtons();
-
-        PanelsTelemetry.INSTANCE.getTelemetry().update();
-    }
-
 }
