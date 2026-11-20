@@ -7,6 +7,8 @@ import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
+import org.firstinspires.ftc.teamcode.command.intake.FlorGetOutCmd;
+import org.firstinspires.ftc.teamcode.command.intake.FlorInCmd;
 import org.firstinspires.ftc.teamcode.command.intake.IntakeInCmd;
 import org.firstinspires.ftc.teamcode.command.intake.IntakeOutCmd;
 import org.firstinspires.ftc.teamcode.command.shooter.AndreaLLShootCmd;
@@ -22,7 +24,8 @@ public class Test extends OpModeCommand {
     public GamepadEx ines;
     public GamepadEx dani;
 
-    public static double targetVelocity = 4000;
+    public static double pollenTargetVelocity = 2600;
+    public static double nectarTargetVelocity = 2600;
 
     public Test(){
 
@@ -45,7 +48,13 @@ public class Test extends OpModeCommand {
                 .whileHeld(new TransferOutCmd(TransferSubsystem))
                 .whileHeld(new IntakeOutCmd(intakeSubsystem));
 
-        shooterShoot.whileActiveContinuous(new AndreaShootCmd(shooterSubsystem, targetVelocity));
+        dani.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whileHeld(new FlorInCmd(intakeSubsystem));
+        dani.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+                .whileHeld(new FlorGetOutCmd(intakeSubsystem));
+
+
+        shooterShoot.whileActiveContinuous(new AndreaShootCmd(shooterSubsystem, pollenTargetVelocity, nectarTargetVelocity));
 
         shooterLLShoot.whileActiveContinuous(new AndreaLLShootCmd(shooterSubsystem, llSubsystem, TransferSubsystem));
     }

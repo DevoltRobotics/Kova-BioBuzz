@@ -41,7 +41,8 @@ public class AndreaLLShootCmd extends CommandBase {
     public void execute() {
 
         if (llSubsystem.getTA() != null) {
-            subsystem.setTargetVelocity(lut.get(llSubsystem.getTA()));
+            subsystem.setPollenTargetVelocity(lut.get(llSubsystem.getTA()));
+            subsystem.setNectarTargetVelocity(lut.get(llSubsystem.getTA()));
             transSubsystem.transferShoot();
         }
 
@@ -49,7 +50,8 @@ public class AndreaLLShootCmd extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        subsystem.setTargetVelocity(0);
+        subsystem.setPollenTargetVelocity(0);
+        subsystem.setNectarTargetVelocity(0);
     }
 
 }

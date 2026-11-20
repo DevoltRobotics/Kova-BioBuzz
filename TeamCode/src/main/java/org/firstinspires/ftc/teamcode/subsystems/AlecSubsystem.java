@@ -31,7 +31,7 @@ public class AlecSubsystem extends SubsystemBase {
     }
 
     public void transferShoot() {
-        transfer.setPower(-1);
+        transfer.setPower(-0.4);
         parabolas.setPosition(0.9); //open
     }
 

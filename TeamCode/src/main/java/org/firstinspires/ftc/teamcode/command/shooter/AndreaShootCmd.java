@@ -2,29 +2,33 @@ package org.firstinspires.ftc.teamcode.command.shooter;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.subsystems.AlecSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.AndreaSubsystem;
 
 public class AndreaShootCmd extends CommandBase {
 
     AndreaSubsystem subsystem;
-    double targetVelocity;
+    double pollenTargetVelocity;
+    double nectarTargetVelcoity;
 
-    public AndreaShootCmd(AndreaSubsystem subsystem, double targetVelocity) {
+    public AndreaShootCmd(AndreaSubsystem subsystem, double pollenTargetVelocity, double nectarTargetVelocity) {
         this.subsystem = subsystem;
-        this.targetVelocity = targetVelocity;
+        this.pollenTargetVelocity = pollenTargetVelocity;
+        this.nectarTargetVelcoity = nectarTargetVelocity;
 
         addRequirements(subsystem);
     }
 
     @Override
     public void execute() {
-        subsystem.setTargetVelocity(targetVelocity);
+        subsystem.setPollenTargetVelocity(pollenTargetVelocity);
+        subsystem.setNectarTargetVelocity(nectarTargetVelcoity);
     }
-
 
     @Override
     public void end(boolean interrupted) {
-        subsystem.setTargetVelocity(0);
+        subsystem.setPollenTargetVelocity(0);
+        subsystem.setNectarTargetVelocity(0);
     }
 
 }
